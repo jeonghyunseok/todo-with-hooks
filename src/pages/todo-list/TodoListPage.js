@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import TodoList from './components/TodoList';
 import CreateTodo from './components/CreateTodo';
@@ -15,10 +15,9 @@ const Page = styled.div`
 `;
 
 function TodoListPage(props) {
-  const [items, setItems] = useState(() => {
-    const todo = localStorage.getItem('todos') || '[]';
-    return JSON.parse(todo);
-  });
+  const [items, setItems] = useState(() =>
+    JSON.parse(localStorage.getItem('todos') || '[]')
+  );
 
   const handleSelectAll = () => {
     setItems(
@@ -45,21 +44,21 @@ function TodoListPage(props) {
 
   const handleEditItem = (index, value) => {
     items[index].name = value;
-    localStorage.setItem('todos', JSON.stringify(items));
     setItems([...items]);
   };
 
   const handleDeleteItem = index => {
     items.splice(index, 1);
-    localStorage.setItem('todos', JSON.stringify(items));
     setItems([...items]);
   };
 
   const handleAddItem = text => {
-    const newItems = [...items, { name: text, completed: false }];
-    localStorage.setItem('todos', JSON.stringify(newItems));
-    setItems(newItems);
+    setItems([...items, { name: text, completed: false }]);
   };
+
+  useEffect(() => {
+    localStorage.setItem('todos', JSON.stringify(items));
+  }, [items]);
 
   return (
     <Page>
