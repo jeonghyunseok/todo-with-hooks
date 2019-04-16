@@ -1,9 +1,7 @@
 import styled from 'styled-components';
 export default styled.div`
-  margin: 20px;
   border: 1px solid #ccc;
   padding: 10px;
-  width: 600px;
 
   .TodoListItem {
     cursor: pointer;

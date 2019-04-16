@@ -1,13 +1,12 @@
 import React from 'react';
 import TodoListItem from './TodoListItem';
 import StyledTodoList from './TodoList.style';
-import { Input, Button, Icon } from 'antd';
+import { Button } from 'antd';
 import PropTypes from 'prop-types';
 
 function TodoList(props) {
   const {
     items,
-    onCreate,
     onDelete,
     onEdit,
     onChangeComplete,
@@ -16,15 +15,6 @@ function TodoList(props) {
   } = props;
   const isSelectedAll = items.every(({ completed }) => completed);
 
-  const inputRef = React.createRef();
-
-  const handleEnterTodoText = e => {
-    onCreate(e.target.value);
-    inputRef.current.setState({
-      value: '',
-    });
-  };
-
   const handleChangeComplteItem = (item, index, value) => {
     item.completed = value;
     onChangeComplete(index, item);
@@ -32,14 +22,6 @@ function TodoList(props) {
 
   return (
     <StyledTodoList className="TodoList">
-      <div>
-        <Input
-          ref={inputRef}
-          onPressEnter={handleEnterTodoText}
-          addonAfter={<Icon type="plus" />}
-        />
-      </div>
-
       <div>
         {items.map((item, index) => {
           return (

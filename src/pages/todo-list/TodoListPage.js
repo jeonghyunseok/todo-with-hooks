@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import TodoList from './components/TodoList';
+import CreateTodo from './components/CreateTodo';
 
 const Page = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  position: relative;
+  width: 800px;
+  margin: 0 auto;
   min-height: 80vh;
+
+  .CreateTodo {
+    margin: 20px 0 20px 0;
+  }
 `;
 
 function TodoListPage(props) {
@@ -58,9 +63,9 @@ function TodoListPage(props) {
 
   return (
     <Page>
+      <CreateTodo onCreate={handleAddItem} />
       <TodoList
         items={items}
-        onCreate={handleAddItem}
         onDelete={handleDeleteItem}
         onEdit={handleEditItem}
         onSelectAll={handleSelectAll}
