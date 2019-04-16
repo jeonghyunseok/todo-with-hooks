@@ -1,4 +1,5 @@
-.TodoList {
+import styled from 'styled-components';
+export default styled.div`
   margin: 20px;
   border: 1px solid #ccc;
   padding: 10px;
@@ -9,7 +10,6 @@
     padding: 10px;
     border-bottom: 1px dashed #ccc;
     display: flex;
-
 
     &:last-child {
       border-bottom: none;
@@ -43,11 +43,10 @@
     display: flex;
     justify-content: space-between;
 
-
     div {
       span {
         margin-left: 10px;
       }
     }
   }
-}
+`;
