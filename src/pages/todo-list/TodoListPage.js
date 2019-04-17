@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import TodoList from './components/TodoList';
 import CreateTodo from './components/CreateTodo';
+import { useLocalStorage } from '../../hooks';
 
 const Page = styled.div`
   position: relative;
@@ -17,16 +18,9 @@ const Page = styled.div`
 function TodoListPage(props) {
   const todoId = useRef(0);
 
-  const initialState = () => {
-    const todos = JSON.parse(localStorage.getItem('todos') || '[]');
-    todoId.current = todos.reduce(
-      (memo, todo) => Math.max(memo, todo.id || 0),
-      0
-    );
-    return todos;
-  };
-
-  const [items, setItems] = useState(initialState);
+  const [items, setItems] = useLocalStorage('todos', [], values => {
+    todoId.current = values.reduce((memo, todo) => Math.max(memo, todo.id), 0);
+  });
 
   const handleSelectAll = () => {
     setItems(
