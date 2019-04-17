@@ -1,20 +1,21 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import {Link} from 'react-router-dom';
-import {AuthContext} from '../contexts';
+import { Link } from 'react-router-dom';
+import BatteryEffect from '../components/BatteryEffect';
+import { AuthContext } from '../contexts';
 
 const Page = styled.div`
   text-align: center;
   display: flex;
   justify-content: center;
-  min-height: 80vh;
   align-items: center;
 `;
 
-const IndexPage = ({auth}) => {
+const IndexPage = ({ auth }) => {
   return (
     <Page>
       <div>
+        <BatteryEffect />
         <h1>Welcome to React Basic</h1>
         <AuthContext.Consumer>
           {auth =>
