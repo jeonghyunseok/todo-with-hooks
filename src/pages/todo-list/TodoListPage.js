@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import TodoList from './components/TodoList';
 import CreateTodo from './components/CreateTodo';
@@ -15,9 +15,18 @@ const Page = styled.div`
 `;
 
 function TodoListPage(props) {
-  const [items, setItems] = useState(() =>
-    JSON.parse(localStorage.getItem('todos') || '[]')
-  );
+  const todoId = useRef(0);
+
+  const initialState = () => {
+    const todos = JSON.parse(localStorage.getItem('todos') || '[]');
+    todoId.current = todos.reduce(
+      (memo, todo) => Math.max(memo, todo.id || 0),
+      0
+    );
+    return todos;
+  };
+
+  const [items, setItems] = useState(initialState);
 
   const handleSelectAll = () => {
     setItems(
@@ -53,7 +62,8 @@ function TodoListPage(props) {
   };
 
   const handleAddItem = text => {
-    setItems([...items, { name: text, completed: false }]);
+    todoId.current += 1;
+    setItems([...items, { id: todoId.current, name: text, completed: false }]);
   };
 
   useEffect(() => {
